@@ -1,6 +1,5 @@
 from currentTime import *
 from writeToFile import *
-#####
 
 class Course():
     def __init__(self, name : str, days : list, scheduledTime : str, info : str):
@@ -32,15 +31,15 @@ def autoFilter(rawClassName, rawStartTime, rawActiveDays, notes, author):
     return schedule(className, filteredStartTime, activeDays, notes, author)
 
 def checkDateFormat(startTime : list, days : list):
-    for day in days: #Check to make sure the user has enetered a correct date
+    for day in days: #Check to make sure the user has entered a correct date
         day = str(day).lower()
         if day not in validDays:
             return "The days are not formatted correctly"
 
-    if int(startTime[0]) < 0 or int(startTime[0]) > 24: #The first element in the list stored the number of the hour
+    if int(startTime[0]) < 0 or int(startTime[0]) > 24: #The first element in the list stored the hour
         return "Time cannot be negative or over the value of 24 for the hour"
     
-    elif int(startTime[1]) < 0 or int(startTime[1]) > 59: #The second element in the list stored the number of the minute
+    elif int(startTime[1]) < 0 or int(startTime[1]) > 59: #The second element in the list stored the minute
         return "Time cannot be neagtive or over the value of 59 for the minute"
 
    
