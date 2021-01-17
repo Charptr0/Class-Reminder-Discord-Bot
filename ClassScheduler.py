@@ -40,7 +40,7 @@ def checkDateFormat(startTime : list, days : list):
         return "Time cannot be negative or over the value of 24 for the hour"
     
     elif int(startTime[1]) < 0 or int(startTime[1]) > 59: #The second element in the list stored the minute
-        return "Time cannot be neagtive or over the value of 59 for the minute"
+        return "Time cannot be negative or over the value of 59 for the minute"
 
    
 def schedule(className, startTime : list, days : list, notes, author):

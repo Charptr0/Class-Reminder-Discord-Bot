@@ -1,6 +1,6 @@
 import datetime
 import pytz
-######
+
 dateDict = {
     0 : "mon",
     1 : "tue",

@@ -98,7 +98,7 @@ async def removeClass(ctx, * , className : str):
                     await ctx.send("You have successfully removed " + str(className))
                     return
     
-    await ctx.send("An error has occured, please contact " + str(bot.get_user(adminID)))
+    await ctx.send("An error has occurred, please contact " + str(bot.get_user(adminID)))
 
 @bot.command("checkme") #A quick way to see all the user's classes
 async def checkMe(ctx):
