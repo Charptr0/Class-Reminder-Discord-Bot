@@ -65,7 +65,7 @@ async def reminder():
         for course in user.sessions:
             if currentDay in course.days and currentTime in course.time: #If a session is found, alert the user with a ping
                 embedMsg = createEmbed(course)
-                await channel.send(user.name.mention + ", one of your class is about to start or it's starting right now")
+                await channel.send(user.name.mention + ", one of your session is about to start, or it's starting right now")
                 await channel.send(embed=embedMsg)
     
 @bot.command("removeme") #Remove the user completely 
@@ -83,7 +83,7 @@ async def removeMe(ctx):
 async def loadMeFromBackUp(ctx):
     try:
         ClassScheduler.load(ctx.author.id)
-        await ctx.send("Success, your profile has been loaded")
+        await ctx.send("Success, your profile has been reloaded")
     except:
         await ctx.send("Could not find your profile in system, load failed")
 
@@ -95,7 +95,7 @@ async def removeClass(ctx, * , className : str):
                 if className in str(course.name):
                     user.sessions.remove(course)
                     ClassScheduler.removeClassFromFile(ctx.author.id, className)
-                    await ctx.send("You have sucessfully removed " + str(className))
+                    await ctx.send("You have successfully removed " + str(className))
                     return
     
     await ctx.send("An error has occured, please contact " + str(bot.get_user(adminID)))
