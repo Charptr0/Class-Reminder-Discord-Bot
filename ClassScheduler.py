@@ -9,9 +9,10 @@ class Course():
         self.days = days
 
 class User():
-    def __init__(self, id : int, name):
+    def __init__(self, id : int, name, mention):
         self.id = id
         self.name = name
+        self.mention = mention
         self.sessions = []
     
     def addClass(self, course : Course):
@@ -59,7 +60,7 @@ def schedule(className, startTime : list, days : list, notes, author):
                 return
 
     else: #A new user
-        newUser = User(author.id, author)
+        newUser = User(author.id, author, author.mention)
         newUser.addClass(newCourse)
         users.append(newUser)
 

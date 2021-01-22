@@ -17,7 +17,7 @@ def createEmbed(course): #Creating that fancy message
     embed.add_field(name="Class Name", value=course.name, inline=False)
     embed.add_field(name="Time", value=course.time, inline=False)
     embed.add_field(name="Link/Info", value=course.info, inline=False)
-    embed.set_footer(text="If you encounter any problems with the bot, please report it to " + str(bot.get_user(adminID)))
+    embed.set_footer(text="If you encounter any problems with the bot, please report it to Sharpness V")
     return embed
 
 @bot.event
@@ -40,12 +40,13 @@ async def start(ctx): #Start the loop
     global mainChannel
     mainChannel = int(ctx.channel.id)
     reminder.start()
+    await ctx.send("The loop has started")
 
 @bot.command("stop") #Stop the reminder
 @commands.check(adminCheck)
 async def stop(ctx):
     reminder.stop() #Stop the loop
-    await ctx.send("The bot has stopped")
+    await ctx.send("The loop has stopped")
 
 @bot.command("reset") #A factory reset, admin perms only
 @commands.check(adminCheck)
@@ -53,19 +54,20 @@ async def factoryReset(ctx): #Destroy all data
     ClassScheduler.users.clear()
     await ctx.send("A database reset has been complete")
 
-@tasks.loop(seconds=10)
+@tasks.loop(seconds=60)
 async def reminder():
     currentTime = getCurrentTime()[:-3] #Get the time
     currentDay = getCurrentDay() #Get the day 
 
     channel = bot.get_channel(mainChannel)
+    await channel.send("IM HERE")
     for user in ClassScheduler.users:
         if bot.get_user(user.id) == None: #If the user left the server
             continue
         for course in user.sessions:
             if currentDay in course.days and currentTime in course.time: #If a session is found, alert the user with a ping
                 embedMsg = createEmbed(course)
-                await channel.send(user.name.mention + ", one of your session is about to start, or it's starting right now")
+                await channel.send(user.mention)
                 await channel.send(embed=embedMsg)
     
 @bot.command("removeme") #Remove the user completely 
