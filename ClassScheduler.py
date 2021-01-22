@@ -67,12 +67,12 @@ def schedule(className, startTime : list, days : list, notes, author):
         save(newUser, newCourse, True)
         return
 
-def load(userID : int):
+def load(userID : int, mention):
     logs = readJsonFile()
 
     for member in logs:
         if member["id"] == userID:
-            newUser = User(userID, member["name"])
+            newUser = User(userID, member["name"], mention)
             users.append(newUser)
             for session in member["sessions"]:
                 newCourse = Course(session["name"], session["days"], session["time"], session["info"])

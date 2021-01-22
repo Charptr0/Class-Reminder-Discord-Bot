@@ -5,6 +5,7 @@ from discord.ext import commands, tasks
 import ClassScheduler
 
 token = "" #Put your tokens here
+
 mainChannel = None
 adminID = int()
 
@@ -60,7 +61,7 @@ async def reminder():
     currentDay = getCurrentDay() #Get the day 
 
     channel = bot.get_channel(mainChannel)
-    await channel.send("IM HERE")
+
     for user in ClassScheduler.users:
         if bot.get_user(user.id) == None: #If the user left the server
             continue
@@ -84,7 +85,7 @@ async def removeMe(ctx):
 @bot.command("loadme") #If the bot goes offline, all data will be lost, this commands help bring the user's data back
 async def loadMeFromBackUp(ctx):
     try:
-        ClassScheduler.load(ctx.author.id)
+        ClassScheduler.load(ctx.author.id, ctx.author.mention)
         await ctx.send("Success, your profile has been reloaded")
     except:
         await ctx.send("Could not find your profile in system, load failed")
