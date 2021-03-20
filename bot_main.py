@@ -18,7 +18,7 @@ def createEmbed(course): #Creating that fancy message
     embed.add_field(name="Class Name", value=course.name, inline=False)
     embed.add_field(name="Time", value=course.time, inline=False)
     embed.add_field(name="Link/Info", value=course.info, inline=False)
-    embed.set_footer(text="If you encounter any problems with the bot, please report it to Sharpness V")
+    embed.set_footer(text="If you encounter any problems with the bot, please report it to the mods")
     return embed
 
 @bot.event
@@ -63,8 +63,6 @@ async def reminder():
     channel = bot.get_channel(mainChannel)
 
     for user in ClassScheduler.users:
-        if bot.get_user(user.id) == None: #If the user left the server
-            continue
         for course in user.sessions:
             if currentDay in course.days and currentTime in course.time: #If a session is found, alert the user with a ping
                 embedMsg = createEmbed(course)
@@ -93,7 +91,7 @@ async def loadMeFromBackUp(ctx):
 @bot.command("removeclass") #Remove a class from the json file and from the current cache
 async def removeClass(ctx, * , className : str):
     for user in ClassScheduler.users:
-        if int(ctx.author.id) == user.id:
+        if int(ctx.author.id) == int(user.id):
             for course in user.sessions:
                 if className in str(course.name):
                     user.sessions.remove(course)
@@ -101,7 +99,7 @@ async def removeClass(ctx, * , className : str):
                     await ctx.send("You have successfully removed " + str(className))
                     return
     
-    await ctx.send("An error has occurred, please contact " + str(bot.get_user(adminID)))
+    await ctx.send("An error has occurred, please contact the mods")
 
 @bot.command("checkme") #A quick way to see all the user's classes
 async def checkMe(ctx):
