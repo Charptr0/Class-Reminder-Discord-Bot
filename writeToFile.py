@@ -16,7 +16,7 @@ def save(user, course,  newUser : bool): #Save the user's config
     if newUser: #Create a new player profile
         logs.append({
             "name" : str(user.name),
-            "id" : user.id,
+            "id" : str(user.id),
             "sessions" : [{
                 "name" : course.name,
                 "time" : course.time,
@@ -28,7 +28,7 @@ def save(user, course,  newUser : bool): #Save the user's config
 
     else: #Existing user
         for member in logs:
-            if member["id"] == user.id: #Find the user using their discord id
+            if str(member["id"]) == str(user.id): #Find the user using their discord id
                 member["sessions"].append({
                     "name" : course.name,
                     "time" : course.time,
@@ -42,7 +42,7 @@ def removeClassFromFile(userID : int, className): #Remove a class from the json 
     logs = readJsonFile()
 
     for member in logs:
-        if member["id"] == userID: 
+        if int(member["id"]) == userID: 
             for session in member["sessions"]:
                 if className in session["name"]:
                     member["sessions"].remove(session) #Delete the entry
@@ -54,7 +54,7 @@ def removeUserFromFile(userID : int):
     logs = readJsonFile()
 
     for member in logs:
-        if member["id"] == userID:
+        if int(member["id"]) == userID:
             logs.remove(member)
     
     writeJsonFile(logs)

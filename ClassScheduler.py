@@ -54,7 +54,7 @@ def schedule(className, startTime : list, days : list, notes, author):
 
     if userInFile(author.id):
         for user in users: #If it is a existing user
-            if author.id == user.id:
+            if str(author.id) == str(user.id):
                 user.addClass(newCourse)
                 save(user, newCourse, False)
                 return
@@ -82,7 +82,7 @@ def userInFile(userID : int):
     logs = readJsonFile()
 
     for member in logs:
-        if member["id"] == userID:
+        if int(member["id"]) == userID:
             return True
     
     return False
