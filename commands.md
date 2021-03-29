@@ -19,7 +19,7 @@ this command <strong>need</strong> to be called. </p>
 <ol>
   <li>The class name. (No spacing) | Ex: Math 391-> Math_391, Physics 208 Lab -> Physics_208_Lab</li>
   <li>The time when the class starts | Ex: 3pm -> 15:00, 10am -> 10:00, 7:30-> 19:30</li>
-  <li>The days of the week when the classes is in session | Ex: Monday and Tuesday -> mon,tue | Ex: Thrusday and Friday -> thru,fri
+  <li>The days of the week when the classes is in session | Ex: Monday and Tuesday -> mon,tue | Ex: Thursday and Friday -> thru,fri
   <li>The user can put anything they want in here
 </ol>
 
