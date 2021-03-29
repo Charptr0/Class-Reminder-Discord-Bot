@@ -12,6 +12,17 @@ def readJsonFile():
     return logs
 
 '''
+readJsonTemplateFile()
+    - read and import content from json_template.json
+    - return the content of the file
+'''
+def readJsonTemplateFile():
+    with open("json_template.json", "r") as f:
+        logs = json.load(f)
+    
+    return logs
+
+'''
 writeJsonFile()
     - dump the contents stored in "logs" into users.json
 '''

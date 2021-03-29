@@ -119,6 +119,13 @@ def load(userID : int, mention):
                 newUser.addClass(newCourse) #append them all into sessions
 
 '''
+reset()
+    - erase everything in the user.json file except the []
+'''
+def reset():
+    writeJsonFile(readJsonTemplateFile())
+
+'''
 userInFile()
     - checks to see if an user exist in the json file
     - returns true if a user exist in file and false if not

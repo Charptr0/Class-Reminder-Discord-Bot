@@ -25,6 +25,12 @@ def createEmbed(course): #Creating that fancy message
 async def on_ready():
     print("The bot is ready")
 
+'''
+addclass()
+    - alllow the user to add a class for the bot to remind
+    - must provide the class name, days, start time, and notes if nesscary
+    - the bot will send the user a message if it has successfully executed the command
+'''
 @bot.command("addclass")
 async def addClass(ctx, className : str, startTime : str, days : str, *, notes : str):
     errors = ClassScheduler.autoFilter(className, startTime, days, notes, ctx.author)
@@ -35,6 +41,10 @@ async def addClass(ctx, className : str, startTime : str, days : str, *, notes :
     else:
         await ctx.send(errors)
 
+'''
+start()
+    - start the background loop, the bot will check its database every 60s
+'''
 @bot.command("start") #Start the reminder
 @commands.check(adminCheck)
 async def start(ctx): #Start the loop
@@ -43,18 +53,35 @@ async def start(ctx): #Start the loop
     reminder.start()
     await ctx.send("The loop has started")
 
+'''
+stop()
+    - stop the background task
+'''
 @bot.command("stop") #Stop the reminder
 @commands.check(adminCheck)
 async def stop(ctx):
     reminder.stop() #Stop the loop
     await ctx.send("The loop has stopped")
 
+'''
+reset()
+    - factory reset of the bot
+    - the bot's memory and database must be wiped
+'''
 @bot.command("reset") #A factory reset, admin perms only
 @commands.check(adminCheck)
 async def factoryReset(ctx): #Destroy all data 
     ClassScheduler.users.clear()
+    ClassScheduler.reset()
+
     await ctx.send("A database reset has been complete")
 
+'''
+reminder()
+    - every 60s, the bot will run this function
+    - it will check its database for matching days and time for a class
+    - if a matching time and day is found, it will create a embedded message and ping the owner of the class
+'''
 @tasks.loop(seconds=60)
 async def reminder():
     currentTime = getCurrentTime()[:-3] #Get the time
@@ -69,6 +96,11 @@ async def reminder():
                 await channel.send(user.mention)
                 await channel.send(embed=embedMsg)
     
+'''
+removeme()
+    - remove a user from the database and from the bot's memory
+    - send back a comfirmation message
+'''
 @bot.command("removeme") #Remove the user completely 
 async def removeMe(ctx):
     for user in ClassScheduler.users:
@@ -80,6 +112,11 @@ async def removeMe(ctx):
 
     await ctx.send("You are not in the database")
 
+'''
+loadme()
+    - if the user is in the database and NOT in the bot's memory, this command should at the user back to memory
+    - send back a comfirmation message
+'''
 @bot.command("loadme") #If the bot goes offline, all data will be lost, this commands help bring the user's data back
 async def loadMeFromBackUp(ctx):
     try:
@@ -88,6 +125,11 @@ async def loadMeFromBackUp(ctx):
     except:
         await ctx.send("Could not find your profile in system, load failed")
 
+'''
+removeclass()
+    - remove a class from a user's database
+    - send back a comfirmation message
+'''
 @bot.command("removeclass") #Remove a class from the json file and from the current cache
 async def removeClass(ctx, * , className : str):
     for user in ClassScheduler.users:
